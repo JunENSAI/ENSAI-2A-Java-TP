@@ -1,26 +1,17 @@
 package fr.ensai.library;
 
-/**
- * Represents a book.
- */
-public class Book {
-
-    // Attributes
+public class Book extends Item {
     private String isbn;
-    private String title;
     private Author author;
-    private int year;
-    private int pageCount;
 
-    /**
-     * Constructs a new Book object.
-     */
     public Book(String isbn, String title, Author author, int year, int pageCount) {
+        super(title, year, pageCount);
         this.isbn = isbn;
-        this.title = title;
         this.author = author;
-        this.year = year;
-        this.pageCount = pageCount;
+    }
+
+    public String getIsbn() {
+        return isbn;
     }
 
     public Author getAuthor() {
@@ -29,7 +20,7 @@ public class Book {
 
     @Override
     public String toString() {
-        return "Book " + title + " written by " + author.toString();
+        return "Book: " + title + " by " + author.toString() +
+               " (" + year + ", " + pageCount + " pages, ISBN: " + isbn + ")";
     }
-
 }

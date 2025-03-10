@@ -3,9 +3,7 @@ package fr.ensai.library;
 import java.util.Objects;
 import java.util.Random;
 
-/**
- * Represents an Author.
- */
+
 public class Author extends Person {
 
     private String nationality;
@@ -44,6 +42,12 @@ public class Author extends Person {
         Author author = (Author) obj;
         return Objects.equals(getName(), author.getName());
     }
+
+/**
+ * Returns a string representation of the Author object.
+ *
+ * @return a string in the format "Author {name}" where {name} is the author's name.
+ */
 
     @Override
     public String toString() {
