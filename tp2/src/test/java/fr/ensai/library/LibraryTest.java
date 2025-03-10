@@ -3,10 +3,9 @@ package fr.ensai.library;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 import org.junit.jupiter.api.Test;
-
 
 class LibraryTest {
 
@@ -16,7 +15,7 @@ class LibraryTest {
         Library library = new Library("Test Library");
         Book book1 = new Book("978-0321765723", "Book 1", new Author("Author 1"), 2008, 320);
         Student student = new Student("John Doe", 20, 2, true);
-        Loan loan1 = new Loan(student, book1, LocalDate.now());
+        Loan loan1 = new Loan(student, book1, new Date());
         library.getActiveLoans().add(loan1);
 
         // WHEN
@@ -33,7 +32,7 @@ class LibraryTest {
         Book book1 = new Book("978-0321765723", "Book 1", new Author("Author 1"), 2008, 320);
         Book book2 = new Book("978-0596009205", "Book 2", new Author("Author 2"), 2005, 450);
         Student student = new Student("John Doe", 20, 2, true);
-        Loan loan1 = new Loan(student, book1, LocalDate.now());
+        Loan loan1 = new Loan(student, book1, new Date());
         library.getActiveLoans().add(loan1);
 
         // WHEN

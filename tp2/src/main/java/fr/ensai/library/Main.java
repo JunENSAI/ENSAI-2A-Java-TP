@@ -7,7 +7,6 @@ public class Main {
         String csvFilePath = "./src/main/resources/books.csv";
         myLibrary.loadBooksFromCSV(csvFilePath);
 
-        // Création et ajout de magazines
         Magazine magazine1 = new Magazine("1234-5678", "How to make a friend", 2023, 50, 1);
         Magazine magazine2 = new Magazine("8765-4321", "Chess with GM", 2023, 40, 2);
         myLibrary.addItem(magazine1);

@@ -3,8 +3,8 @@ package fr.ensai.library;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Library {
@@ -113,7 +113,7 @@ public class Library {
         if (findActiveLoanForItem(item) != null) {
             return false;
         }
-        Loan newLoan = new Loan(student, item, LocalDate.now());
+        Loan newLoan = new Loan(student, item, new Date());
         addLoan(newLoan);
         return true;
     }
@@ -121,7 +121,7 @@ public class Library {
     public boolean renderItem(Item item) {
         Loan loan = findActiveLoanForItem(item);
         if (loan != null) {
-            loan.setReturnDate(LocalDate.now());
+            loan.setReturnDate(new Date());
             completeLoan(loan);
             return true;
         }
