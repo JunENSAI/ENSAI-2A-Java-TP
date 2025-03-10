@@ -1,32 +1,38 @@
 package fr.ensai.library;
 
 import java.util.Objects;
+import java.util.Random;
 
 /**
  * Represents an Author.
  */
-public class Author {
+public class Author extends Person {
 
-    // Attributes
-    private String name;
-    private int age;
     private String nationality;
 
     /**
-     * Constructs a new Book object.
+     * Constructs a new Author object.
+     *
+     * @param name the name of the author
+     * @param age the age of the author
+     * @param nationality the nationality of the author
      */
     public Author(String name, int age, String nationality) {
-        this.name = name;
-        this.age = age;
+        super(name, age);
         this.nationality = nationality;
     }
 
-    public String getName() {
-        return this.name;
+    /**
+     * Constructs a new Author object with a random age between 0 and 149.
+     *
+     * @param name the name of the author
+     */
+    public Author(String name) {
+        super(name, new Random().nextInt(150));
+        this.nationality = "Unknown";
     }
 
     /**
-     * Indicates whether some other object is "equal to" this one.
      * Two authors are considered equal if their names are equal.
      */
     @Override
@@ -35,14 +41,12 @@ public class Author {
             return true;
         if (obj == null || getClass() != obj.getClass())
             return false;
-
         Author author = (Author) obj;
-        return Objects.equals(name, author.name);
+        return Objects.equals(getName(), author.getName());
     }
 
     @Override
     public String toString() {
-        return "Author " + name;
+        return "Author " + getName();
     }
-
 }
