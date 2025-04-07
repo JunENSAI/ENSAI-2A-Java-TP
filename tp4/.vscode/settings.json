@@ -3,5 +3,6 @@
     "editor.formatOnSave": true,
     "java.saveActions.organizeImports": true,
     "cSpell.diagnosticLevel": "Hint",
-    "java.configuration.updateBuildConfiguration": "interactive"
+    "java.configuration.updateBuildConfiguration": "interactive",
+    "DockerRun.DisableAutoGenerateConfig": true
 }

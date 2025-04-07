@@ -2,8 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>Athlete List</title>
-
+    <title>Competition Athletes</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
         integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 </head>
@@ -12,7 +11,23 @@
     <div th:insert="~{fragments/navbar :: navbar}"></div>
     <div class="container my-2" align="center">
 
-        <h1 th:text="${competition.designation} + ' - Athlete List'"> </h1>
+        <h1 th:text="${competition.designation} + ' - Athletes'"></h1>
+        <div th:if="${message}" class="alert alert-success alert-dismissible fade show" role="alert">
+            <span th:text="${message}"></span>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
+        <div th:if="${error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+            <span th:text="${error}"></span>
+             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
+        <!-- End Messages -->
+
+        <hr>
+        <h2>Registered Athletes</h2>
         <table style="width:80%" border="1" class="table table-striped table-responsive-md">
             <thead>
                 <tr>
@@ -25,24 +40,58 @@
                 </tr>
             </thead>
             <tbody>
-                <tr th:if="${athletes.empty}">
-                    <td colspan="3">No athlete in the database</td>
+                <tr th:if="${athletes == null || athletes.empty}">
+                    <td colspan="6">No athletes currently registered for this competition.</td>
                 </tr>
-                <tr th:each="p : ${athletes}">
-                    <td th:text="${p.id}">ID</td>
-                    <td th:text="${p.firstName}">FirstName/td>
-                    <td th:text="${p.lastName}">LastName</td>
-                    <td th:text="${p.age}">Age</td>
-                    <td th:text="${p.gender}">Gender</td>
-                    <td> <a th:href="@{/competition/delete/{id_comp}/athlete/{id_ath}(id_ath=${p.id}, id_comp=${competition.id})}"
-                            class="btn btn-danger">Delete</a> </td>
+                <tr th:each="athlete : ${athletes}">
+                    <td th:text="${athlete.id}">ID</td>
+                    <td th:text="${athlete.firstName}">FirstName</td>
+                    <td th:text="${athlete.lastName}">LastName</td>
+                    <td th:text="${athlete.age}">Age</td>
+                    <td th:text="${athlete.gender}">Gender</td>
+                    <td>
+                        <a th:href="@{/competition/delete/{id_comp}/athlete/{id_ath}(id_comp=${competition.idCompetition}, id_ath=${athlete.id})}"
+                           class="btn btn-danger btn-sm">Unregister</a>
+                    </td>
                 </tr>
             </tbody>
         </table>
 
+        <hr>
+
+        <h2>Register New Athlete</h2>
+        <div th:if="${eligibleAthletes != null and not eligibleAthletes.empty and athletes.size() < competition.maxAthletes}">
+            <form th:action="@{/competition/register}" method="POST" class="form-inline justify-content-center">
+                <input type="hidden" name="competitionId" th:value="${competition.idCompetition}" />
+
+                <div class="form-group mx-sm-3 mb-2">
+                    <label for="athleteSelect" class="sr-only">Select Athlete</label>
+                    <select id="athleteSelect" name="athleteId" class="form-control" required>
+                        <option value="">-- Select Athlete to Register --</option>
+                        <option th:each="eligible : ${eligibleAthletes}"
+                                th:value="${eligible.id}"
+                                th:text="${eligible.firstName + ' ' + eligible.lastName + ' (ID: ' + eligible.id + ')'}">
+                            Eligible Athlete Name
+                        </option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-success mb-2">Register Selected Athlete</button>
+            </form>
+        </div>
+        <div th:if="${eligibleAthletes == null or eligibleAthletes.empty}">
+             <p class="text-muted">No other athletes available to register for this competition.</p>
+        </div>
+        <div th:if="${athletes != null and athletes.size() >= competition.maxAthletes}">
+             <p class="text-warning">This competition has reached its maximum number of athletes (<span th:text="${competition.maxAthletes}"></span>).</p>
+        </div>
+
+
+        <hr>
         <a th:href="@{/competition}" class="btn btn-primary btn-sm mb-3">Back to Competitions</a>
 
     </div>
+
 </body>
 
 </html>
