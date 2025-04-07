@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import fr.ensai.running.model.Athlete;
 import fr.ensai.running.repository.AthleteRepository;
 
+
 @Service
 public class AthleteService {
 
@@ -48,4 +49,5 @@ public class AthleteService {
         athleteRepository.deleteById(id);
         log.warn("Athlete {} deleted", id);
     }
+
 }
